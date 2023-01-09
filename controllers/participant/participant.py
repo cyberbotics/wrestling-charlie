@@ -12,22 +12,42 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Minimalist controller example for the Robot Wrestling Tournament.
-   Demonstrates how to play a simple motion file."""
+"""
+Controller example for the Robot Wrestling Tournament.
+Demonstrates how to access the LEDs and play a custom motion file.
+Beats Bob by moving forwards and pushing him to the ground.
+"""
 
-from controller import Robot, Motion
+import sys
+from controller import Robot
+sys.path.append('..')
+from utils.motion import Motion_library
 
+class Charlie (Robot):
+    def __init__(self):
+        Robot.__init__(self)
+        self.time_step = int(self.getBasicTimeStep())  # retrieves the WorldInfo.basicTimeTime (ms) from the world file
 
-class Wrestler (Robot):
+        # there are 7 controllable LEDs on the NAO robot, but we will use only the ones in the eyes
+        self.leds = {
+            'right': self.getDevice('Face/Led/Right'),
+            'left':  self.getDevice('Face/Led/Left')
+        }
+
+        self.library = Motion_library()
+        self.library.add('Shove', './Shove.motion', loop=True) # adding a custom motion to the library
+
     def run(self):
-        motion = Motion('../motions/Backwards.motion')  # look into this text file, it's easy to understand
-        motion.setLoop(True)
-        motion.play()
-        time_step = int(self.getBasicTimeStep())  # retrieves the WorldInfo.basicTimeTime (ms) from the world file
-        while self.step(time_step) != -1:  # runs the hand wave motion in a loop until Webots quits
+        self.library.play('ForwardLoop')  # walk forward
+        self.library.play('Shove')        # play the shove motion
+
+        self.leds['right'].set(0xff0000)  # set the eyes to red
+        self.leds['left'].set(0xff0000)
+
+        while self.step(self.time_step) != -1:
             pass
 
 
 # create the Robot instance and run main loop
-wrestler = Wrestler()
+wrestler = Charlie()
 wrestler.run()

@@ -1,5 +1,5 @@
 {
-  "name": "My name",
-  "description": "Description of my robot controller program.",
-  "country": "ISO 3166-1 alpha-2 country code"
+  "name": "Charlie",
+  "description": "Controller example for the Robot Wrestling Tournament. Demonstrates how to access the LEDs and play a custom motion file. Beats Bob by moving forwards and pushing him to the ground.",
+  "country": "CH"
 }
