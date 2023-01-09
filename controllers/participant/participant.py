@@ -38,16 +38,18 @@ class Charlie (Robot):
         self.library.add('Shove', './Shove.motion', loop=True) # adding a custom motion to the library
 
     def run(self):
-        self.library.play('ForwardLoop')  # walk forward
-        self.library.play('Shove')        # play the shove motion
+        self.library.play('Stand')
 
         self.leds['right'].set(0xff0000)  # set the eyes to red
         self.leds['left'].set(0xff0000)
 
         while self.step(self.time_step) != -1:
-            pass
+            if self.library.get('Stand').isOver(): # When the robot is done standing for stabilization, it moves forwards
+                self.library.play('ForwardLoop')  # walk forward
+                self.library.play('Shove')        # play the shove motion
 
 
 # create the Robot instance and run main loop
 wrestler = Charlie()
 wrestler.run()
+
