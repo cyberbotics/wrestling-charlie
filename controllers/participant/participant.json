@@ -1,5 +1,5 @@
 {
-  "name": "Charlie",
+  "name": "Charlie (Python)",
   "description": "Demonstrates how to access the LEDs and play a custom motion file. Beats Bob by moving forwards and pushing him to the ground. Doesn't seem to beat Alice though",
   "country": "CH"
 }
